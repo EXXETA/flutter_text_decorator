@@ -22,6 +22,8 @@ enum UnderlineStyle {
     switch (this) {
       case UnderlineStyle.horizontal:
         return HorizontalUnderlinePainter(
+          text: text.data ?? '',
+          textStyle: text.style ?? const TextStyle(),
           color: color,
           strokeWidth: strokeWidth,
         );

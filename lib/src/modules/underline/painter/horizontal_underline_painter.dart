@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_text_decorator/src/modules/underline/base/underline_painter.dart';
 
@@ -26,19 +28,58 @@ import 'package:flutter_text_decorator/src/modules/underline/base/underline_pain
 /// )
 /// ```
 class HorizontalUnderlinePainter extends UnderlinePainter {
-  HorizontalUnderlinePainter({required super.color, required super.strokeWidth, super.horizontalOffset});
+  final String text;
+
+  HorizontalUnderlinePainter({
+    required this.text,
+    required super.color,
+    required super.strokeWidth,
+    super.textStyle,
+    super.horizontalOffset,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
       ..color = color
       ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth;
-    final Path path = Path()
-      ..moveTo(horizontalOffset.left, size.height)
-      ..lineTo(size.width - horizontalOffset.right, size.height);
+      ..strokeWidth = strokeWidth
+      ..strokeCap = StrokeCap.square;
 
-    canvas.drawPath(path, paint);
+    final currentTextStyle = super.textStyle ?? const TextStyle();
+    final textSpan = TextSpan(text: text, style: currentTextStyle);
+    final textPainter = TextPainter(
+      text: textSpan,
+      textDirection: ui.TextDirection.ltr,
+    )..layout(maxWidth: size.width);
+
+    final List<ui.LineMetrics> lines = textPainter.computeLineMetrics();
+
+    for (int i = 0; i < lines.length; i++) {
+      final line = lines[i];
+
+      final double startX = line.left + horizontalOffset.left;
+      final double endX = line.left + line.width - horizontalOffset.right;
+
+      final gapY = _calculateGapBetweenLines(i, line);
+
+      if (_isLineLengthPositiv(startX, endX)) {
+        canvas.drawLine(Offset(startX, gapY), Offset(endX, gapY), paint);
+      }
+    }
+  }
+
+  bool _isLineLengthPositiv(double x, double y) {
+    return x < y;
+  }
+
+  double _calculateGapBetweenLines(int lineIndex, ui.LineMetrics line) {
+    double desiredGap = 5;
+    if (lineIndex == 0) {
+      desiredGap = 1;
+    }
+
+    return line.baseline + line.descent + desiredGap + (strokeWidth / 2.0);
   }
 
   @override
