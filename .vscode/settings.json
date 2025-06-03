@@ -4,5 +4,6 @@
         "editor.rulers": [
             160
         ],
-    }
+    },
+    "cmake.sourceDirectory": "C:/Development/projects/flutter_text_decorator/example/windows/runner"
 }
