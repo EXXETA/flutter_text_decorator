@@ -23,6 +23,18 @@ class CircleExampleScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 32),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: TextDecorator.circled(
+                  style: CircleStyle.basic,
+                  text: const Text(
+                    'Franz jagt im komplett verwahrlosten Taxi quer durch Berlin',
+                    style: TextStyle(fontSize: 16),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 64),
               TextDecorator.circled(
                 text: const Text(
                   'Circled Text',
@@ -30,11 +42,15 @@ class CircleExampleScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 32),
-              TextDecorator.circled(
-                style: CircleStyle.basic,
-                text: const Text(
-                  'Franz jagt im komplett verwahrlosten Taxi quer durch Berlin',
-                  style: TextStyle(fontSize: 16),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: TextDecorator.circled(
+                  style: CircleStyle.circled,
+                  text: const Text(
+                    'Franz jagt im komplett verwahrlosten Taxi quer durch Berlin',
+                    style: TextStyle(fontSize: 16),
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
             ],

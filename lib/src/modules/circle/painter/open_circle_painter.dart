@@ -1,7 +1,7 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_text_decorator/src/modules/base/decoration_base.dart';
 import 'package:flutter_text_decorator/src/modules/base/text_decoration_painter.dart';
+import 'package:flutter_text_decorator/src/modules/circle/classes/circle_angle_option.dart';
 import 'package:flutter_text_decorator/src/modules/circle/mixins/circle_mixin.dart';
 
 /// A [CustomPainter] that draws an "open circle" decoration around text.
@@ -35,7 +35,13 @@ class OpenCirclePainter extends TextDecoratorPainter with CircleConstraints {
     required super.text,
     required super.textStyle,
     required super.decoration,
+    this.circleAngleOption = const CircleAngleOption.bottomLeft(),
   }) : assert(text != '' && decoration.strokeWidth > 0, 'text should not be empty and decoration.strokeWidth should be greater than 0');
+
+  /// Defines the start and sweep angles for the two arcs forming the open circle.
+  ///
+  /// Defaults to [CircleAngleOption.bottomLeft] if not specified.
+  final CircleAngleOption circleAngleOption;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -44,16 +50,12 @@ class OpenCirclePainter extends TextDecoratorPainter with CircleConstraints {
       ..strokeWidth = decoration.strokeWidth
       ..style = PaintingStyle.stroke;
 
-    final circleSize = getCircleSizes(text: text, textStyle: textStyle);
+    final circleSize = getCircleSizes(text: text, textStyle: textStyle, size: size);
 
-    final scaledHorizontalRadius = circleSize.horizontalRadius * 2.1;
-    final scaledVerticalRadiusBottomCircle = circleSize.verticalRadius * 2.9;
+    final scaledHorizontalRadius = circleSize.horizontalRadius * 2;
+    final scaledVerticalRadiusBottomCircle = circleSize.verticalRadius * 3;
     final scaledVerticalRadiusTopCircle = circleSize.verticalRadius * 3.5;
     const verticalOffset = 1.8;
-    const startAngleBottomCircle = -1.5;
-    const sweepAngleBottomCircle = pi + 1.5;
-    const startAngleTopCircle = pi + 6.2;
-    const sweepAngleTopCircle = pi - 1;
 
     final centerOffset = Offset(
       size.width / 2,
@@ -67,8 +69,8 @@ class OpenCirclePainter extends TextDecoratorPainter with CircleConstraints {
           width: scaledHorizontalRadius,
           height: scaledVerticalRadiusBottomCircle,
         ),
-        startAngleBottomCircle,
-        sweepAngleBottomCircle,
+        circleAngleOption.startAngleBottomCircle,
+        circleAngleOption.sweepAngleBottomCircle,
         false,
         paint,
       )
@@ -78,8 +80,8 @@ class OpenCirclePainter extends TextDecoratorPainter with CircleConstraints {
           width: scaledHorizontalRadius,
           height: scaledVerticalRadiusTopCircle,
         ),
-        startAngleTopCircle,
-        sweepAngleTopCircle,
+        circleAngleOption.startAngleTopCircle,
+        circleAngleOption.sweepAngleTopCircle,
         false,
         paint,
       );
@@ -87,6 +89,12 @@ class OpenCirclePainter extends TextDecoratorPainter with CircleConstraints {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
+    if (oldDelegate is OpenCirclePainter) {
+      return oldDelegate.circleAngleOption.startAngleBottomCircle != circleAngleOption.startAngleBottomCircle ||
+          oldDelegate.circleAngleOption.sweepAngleBottomCircle != circleAngleOption.sweepAngleBottomCircle ||
+          oldDelegate.circleAngleOption.startAngleTopCircle != circleAngleOption.startAngleTopCircle ||
+          oldDelegate.circleAngleOption.sweepAngleTopCircle != circleAngleOption.sweepAngleTopCircle;
+    }
+    return true; // Repaint if the delegate type changes or for other unknown reasons
   }
 }
