@@ -56,7 +56,7 @@ class BoxExampleScreen extends StatelessWidget {
               TextDecorator.boxed(
                 style: BoxStyle.curled,
                 text: const Text(
-                  'Curcled Box',
+                  'Curled Box',
                   style: TextStyle(fontSize: 16),
                 ),
                 strokeWidth: 2,
