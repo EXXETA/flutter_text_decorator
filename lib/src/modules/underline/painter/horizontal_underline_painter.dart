@@ -41,7 +41,6 @@ class HorizontalUnderlinePainter extends UnderlinePainter with LineGap {
   final String text;
 
   @override
-  @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = color
