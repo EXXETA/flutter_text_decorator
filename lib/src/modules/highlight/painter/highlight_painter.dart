@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_text_decorator/src/modules/underline/mixins/line_gap_mixin.dart';
 
 /// A [CustomPainter] that draws a marker-style highlight over text.
 ///
@@ -28,8 +29,7 @@ import 'package:flutter/rendering.dart';
 ///   ),
 /// )
 /// ```
-class HighlightPainter extends CustomPainter {
-
+class HighlightPainter extends CustomPainter with LineGap {
   HighlightPainter({required this.text, required this.color, required this.textStyle, this.strokeWidth});
   final String text;
   final Color color;
@@ -38,31 +38,40 @@ class HighlightPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final textSpan = TextSpan(text: text, style: textStyle);
     final textPainter = TextPainter(
-      text: textSpan,
+      text: TextSpan(text: text, style: textStyle),
       textDirection: TextDirection.ltr,
-    )..layout();
+    )..layout(maxWidth: size.width);
+
+    final strokeW = strokeWidth ?? textStyle.fontSize ?? 16;
 
     final paint = Paint()
       ..color = color
       ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth ?? textPainter.height;
+      ..strokeWidth = strokeW;
 
-    const yThreshold = 5;
-    final horizontalOffset = textPainter.width / 4;
-    final path = Path()
-      ..moveTo(0, textPainter.height / 2)
-      ..cubicTo(
-        horizontalOffset,
-        size.height / 2 + yThreshold,
-        size.width - horizontalOffset,
-        size.height / 2 - yThreshold,
-        size.width,
-        size.height / 2 + yThreshold,
-      );
+    double yOffset = 0;
 
-    canvas.drawPath(path, paint);
+    for (final line in textPainter.computeLineMetrics()) {
+      final width = size.width;
+      const yThreshold = 5;
+      final horizontalOffset = line.width / 4;
+      final height = line.height + line.descent;
+      final y = yOffset + height / 2;
+      final path = Path()
+        ..moveTo(line.left, yOffset + line.height / 2)
+        ..cubicTo(
+          horizontalOffset,
+          y + yThreshold,
+          width - horizontalOffset,
+          y - yThreshold,
+          width,
+          y + yThreshold,
+        );
+
+      canvas.drawPath(path, paint);
+      yOffset += line.height + line.descent;
+    }
   }
 
   @override
