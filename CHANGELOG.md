@@ -1,6 +1,9 @@
 flutter_tex_dec Changelog
 ===========================
 
+# 0.0.2
+* Added Multiline support for HighlightPainter
+
 # 0.0.1
 
 * Added Box Styles:
