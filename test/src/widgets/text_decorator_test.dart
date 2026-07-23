@@ -79,6 +79,67 @@ void main() {
           );
         },
       );
+
+      testWidgets(
+        'BoxStyle.bubble renders with custom color',
+        (tester) async {
+          final widget = TextDecorator.boxed(
+            text: _text,
+            strokeWidth: _stokeWidth,
+            color: Colors.purple,
+          );
+
+          await tester.pumpWidget(createTestApp(_createCenter(widget)));
+          await tester.pumpAndSettle();
+
+          await expectLater(
+            find.byType(Text),
+            matchesGoldenFile('text_decorator/box/bubble.custom_color.png'),
+          );
+        },
+      );
+
+      testWidgets(
+        'BoxStyle.rounded renders with custom color',
+        (tester) async {
+          final widget = TextDecorator.boxed(
+            style: BoxStyle.rounded,
+            text: _text,
+            strokeWidth: _stokeWidth,
+            borderRadius: 2,
+            color: Colors.blue,
+          );
+
+          await tester.pumpWidget(createTestApp(_createCenter(widget)));
+          await tester.pumpAndSettle();
+
+          await expectLater(
+            find.byType(Text),
+            matchesGoldenFile('text_decorator/box/rounded.custom_color.png'),
+          );
+        },
+      );
+    });
+
+    group('Testing TextDecorator.circled styles', () {
+      testWidgets(
+        'CircleStyle.circled renders with custom color',
+        (tester) async {
+          final widget = TextDecorator.circled(
+            text: _text,
+            color: Colors.red,
+            strokeWidth: _stokeWidth,
+          );
+
+          await tester.pumpWidget(createTestApp(_createCenter(widget)));
+          await tester.pumpAndSettle();
+
+          await expectLater(
+            find.byType(Text),
+            matchesGoldenFile('text_decorator/circle/circled.custom_color.png'),
+          );
+        },
+      );
     });
   });
   group('Testing TextDecorator.underline styles', () {

@@ -21,6 +21,7 @@ class CircleExampleScreen extends StatelessWidget {
                   'Basic Circle',
                   style: TextStyle(fontSize: 32),
                 ),
+                color: Colors.green,
               ),
               const SizedBox(height: 32),
               TextDecorator.circled(
@@ -28,6 +29,8 @@ class CircleExampleScreen extends StatelessWidget {
                   'Circled Text',
                   style: TextStyle(fontSize: 32),
                 ),
+                color: Colors.red,
+                strokeWidth: 2,
               ),
               const SizedBox(height: 32),
               TextDecorator.circled(
