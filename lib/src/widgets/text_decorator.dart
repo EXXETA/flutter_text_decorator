@@ -53,24 +53,30 @@ class TextDecorator extends StatelessWidget {
   /// - `text`: The [Text] widget to be decorated.
   /// - `style`: The [CircleStyle] to apply
   ///   Defaults to [CircleStyle.circled].
-  /// - `decoration`: A [CircleDecoration] object to customize the appearance
-  ///   (color, strokeWidth).
+  /// - `color`: The [Color] of the circle outline. Defaults to [Colors.orange].
+  /// - `strokeWidth`: The thickness of the circle outline. Defaults to `1.0`.
   ///
   /// Example Usage:
   /// ```dart
   /// TextDecorator.circled(
   ///   text: Text("Circled Text", style: TextStyle(fontSize: 20)),
-  ///   style: CircleStyle.dashed,
-  // decoration: CircleDecoration(color: Colors.blue, strokeWidth: 2.0),
+  ///   style: CircleStyle.circled,
+  ///   color: Colors.blue,
+  ///   strokeWidth: 2.0,
   /// )
   /// ```
   factory TextDecorator.circled({
     required Text text,
     CircleStyle style = CircleStyle.circled,
+    Color color = Colors.orange,
+    double strokeWidth = 1,
   }) {
     return TextDecorator(
       text: text,
-      painter: style.getPainter(text, decoration: CircleDecoration.standard()),
+      painter: style.getPainter(
+        text,
+        decoration: CircleDecoration(color: color, strokeWidth: strokeWidth),
+      ),
     );
   }
 
@@ -114,7 +120,9 @@ class TextDecorator extends StatelessWidget {
   /// - `borderRadius`: The radius for the corners of the box. This is primarily
   ///   used by [BoxStyle.rounded] and might influence other styles like [BoxStyle.bubble].
   ///   Defaults to `1.0`.
-  /// - `strokeWidth`: The thickness of the box outline. Defaults to `1.0`. ///
+  /// - `strokeWidth`: The thickness of the box outline. Defaults to `1.0`.
+  /// - `color`: The [Color] of the box outline. If `null`, a style-specific default
+  ///   color will be used (e.g., [Colors.orange] for [BoxStyle.bubble]).
   ///
   /// Example Usage:
   /// ```dart
@@ -123,6 +131,7 @@ class TextDecorator extends StatelessWidget {
   ///   style: BoxStyle.rounded,
   ///   borderRadius: 10.0,
   ///   strokeWidth: 2.0,
+  ///   color: Colors.blueAccent,
   /// )
   /// ```
   factory TextDecorator.boxed({
@@ -131,10 +140,11 @@ class TextDecorator extends StatelessWidget {
     double borderRadius = 1,
     double strokeWidth = 1,
     EdgeInsets padding = const EdgeInsets.all(8),
+    Color? color,
   }) {
     return TextDecorator(
       text: text,
-      painter: style.getPainter(text, borderRadius, strokeWidth, padding),
+      painter: style.getPainter(text, borderRadius, strokeWidth, padding, color: color),
     );
   }
 

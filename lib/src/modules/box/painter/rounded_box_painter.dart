@@ -21,6 +21,8 @@ import 'package:flutter/material.dart';
 ///     text: Text("Hello World", style: TextStyle(fontSize: 16)),
 ///     borderRadius: 8.0,
 ///     strokeWidth: 2.0,
+///     padding: EdgeInsets.all(8),
+///     color: Colors.black,
 ///   ),
 ///   child: Text("Hello World", style: TextStyle(fontSize: 16)), // Optional: if you want the text painted by Flutter's framework too
 /// )
@@ -31,16 +33,19 @@ class RoundedBoxPainter extends CustomPainter {
     required this.borderRadius,
     required this.strokeWidth,
     required this.padding,
+    required this.color,
     super.repaint,
   });
   final Text text;
   final double borderRadius;
   final double strokeWidth;
   final EdgeInsets padding;
+  final Color color;
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
+      ..color = color
       ..strokeWidth = strokeWidth
       ..style = PaintingStyle.stroke;
 

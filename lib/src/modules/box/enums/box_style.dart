@@ -19,9 +19,17 @@ enum BoxStyle {
   /// - `text`: The [Text] widget to be decorated.
   /// - `borderRadius`: Intended for the radius of corners.
   /// - `strokeWidth`: Intended for the thickness of the box outline.
+  /// - `color`: The [Color] of the box outline. If `null`, a style-specific default
+  ///   color will be used.
   ///
   /// See individual enum value documentation for notes on parameter usage for specific styles.
-  CustomPainter getPainter(Text text, double borderRadius, double strokeWidth, EdgeInsets padding) {
+  CustomPainter getPainter(
+    Text text,
+    double borderRadius,
+    double strokeWidth,
+    EdgeInsets padding, {
+    Color? color,
+  }) {
     switch (this) {
       case BoxStyle.rounded:
         return RoundedBoxPainter(
@@ -29,11 +37,12 @@ enum BoxStyle {
           borderRadius: borderRadius,
           strokeWidth: strokeWidth,
           padding: padding,
+          color: color ?? Colors.black,
         );
       case BoxStyle.bubble:
         return BubbleBoxPainter(
           text: text,
-          bubbleColor: Colors.orange,
+          bubbleColor: color ?? Colors.orange,
           tip: const BubbleBoxTip(
             position: TipPosition.left,
             orientation: TipOrientation.left,
@@ -43,7 +52,7 @@ enum BoxStyle {
       case BoxStyle.curled:
         return WavyBoxPainter(
           text: text,
-          borderColor: Colors.black,
+          borderColor: color ?? Colors.black,
           padding: padding,
         );
     }
