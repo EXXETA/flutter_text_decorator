@@ -21,6 +21,7 @@ enum BoxStyle {
   /// - `strokeWidth`: Intended for the thickness of the box outline.
   /// - `color`: The [Color] of the box outline. If `null`, a style-specific default
   ///   color will be used.
+  /// - `tip`: Configuration for the speech bubble tip. Only used by [BoxStyle.bubble].
   ///
   /// See individual enum value documentation for notes on parameter usage for specific styles.
   CustomPainter getPainter(
@@ -29,6 +30,7 @@ enum BoxStyle {
     double strokeWidth,
     EdgeInsets padding, {
     Color? color,
+    BubbleBoxTip tip = const BubbleBoxTip(),
   }) {
     switch (this) {
       case BoxStyle.rounded:
@@ -43,10 +45,7 @@ enum BoxStyle {
         return BubbleBoxPainter(
           text: text,
           bubbleColor: color ?? Colors.orange,
-          tip: const BubbleBoxTip(
-            position: TipPosition.left,
-            orientation: TipOrientation.left,
-          ),
+          tip: tip,
           padding: padding,
         );
       case BoxStyle.curled:
