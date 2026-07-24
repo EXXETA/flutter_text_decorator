@@ -22,6 +22,7 @@ class BoxExampleScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 32),
                 ),
                 strokeWidth: 2,
+                color: Colors.blueAccent,
               ),
               const SizedBox(height: 32),
               TextDecorator.boxed(
@@ -41,6 +42,7 @@ class BoxExampleScreen extends StatelessWidget {
                 ),
                 strokeWidth: 2,
                 borderRadius: 16,
+                color: Colors.purple,
               ),
               const SizedBox(height: 32),
               TextDecorator.boxed(
