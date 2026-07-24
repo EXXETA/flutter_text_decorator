@@ -6,6 +6,7 @@ flutter_tex_dec Changelog
 * Added Multiline support for HighlightPainter
 * Added color option for Box and Circle styles
 * Added strokeWidth option for Circle styles
+* Added tip position option for Bubble box style
 
 # 0.0.1
 

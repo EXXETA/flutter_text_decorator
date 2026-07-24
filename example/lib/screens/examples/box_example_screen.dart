@@ -48,6 +48,20 @@ class BoxExampleScreen extends StatelessWidget {
               TextDecorator.boxed(
                 style: BoxStyle.bubble,
                 text: const Text(
+                  'Bubble tip right',
+                  style: TextStyle(fontSize: 32),
+                ),
+                strokeWidth: 2,
+                borderRadius: 16,
+                tip: const BubbleBoxTip(
+                  position: TipPosition.right,
+                  orientation: TipOrientation.right,
+                ),
+              ),
+              const SizedBox(height: 32),
+              TextDecorator.boxed(
+                style: BoxStyle.bubble,
+                text: const Text(
                   'Franz jagt im komplett verwahrlosten Taxi quer durch Berlin',
                   style: TextStyle(fontSize: 16),
                 ),

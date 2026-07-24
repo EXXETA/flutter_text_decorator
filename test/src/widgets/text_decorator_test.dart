@@ -100,6 +100,28 @@ void main() {
       );
 
       testWidgets(
+        'BoxStyle.bubble renders with custom tip position',
+        (tester) async {
+          final widget = TextDecorator.boxed(
+            text: _text,
+            strokeWidth: _stokeWidth,
+            tip: const BubbleBoxTip(
+              position: TipPosition.right,
+              orientation: TipOrientation.right,
+            ),
+          );
+
+          await tester.pumpWidget(createTestApp(_createCenter(widget)));
+          await tester.pumpAndSettle();
+
+          await expectLater(
+            find.byType(Text),
+            matchesGoldenFile('text_decorator/box/bubble.custom_tip.png'),
+          );
+        },
+      );
+
+      testWidgets(
         'BoxStyle.rounded renders with custom color',
         (tester) async {
           final widget = TextDecorator.boxed(

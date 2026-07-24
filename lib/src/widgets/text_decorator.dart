@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_text_decorator/src/modules/box/decorations/bubble_box_tip.dart';
 import 'package:flutter_text_decorator/src/modules/box/enums/box_style.dart';
 import 'package:flutter_text_decorator/src/modules/circle/enums/circle_style.dart';
 import 'package:flutter_text_decorator/src/modules/highlight/enums/highlight_style.dart';
@@ -119,6 +120,8 @@ class TextDecorator extends StatelessWidget {
   /// - `strokeWidth`: The thickness of the box outline. Defaults to `1.0`.
   /// - `color`: The [Color] of the box outline. If `null`, a style-specific default
   ///   color will be used (e.g., [Colors.orange] for [BoxStyle.bubble]).
+  /// - `tip`: Configuration for the speech bubble tip. Only used by [BoxStyle.bubble].
+  ///   Controls the horizontal position and pointing direction of the triangle.
   ///
   /// Example Usage:
   /// ```dart
@@ -137,10 +140,18 @@ class TextDecorator extends StatelessWidget {
     double strokeWidth = 1,
     EdgeInsets padding = const EdgeInsets.all(8),
     Color? color,
+    BubbleBoxTip tip = const BubbleBoxTip(),
   }) {
     return TextDecorator(
       text: text,
-      painter: style.getPainter(text, borderRadius, strokeWidth, padding, color: color),
+      painter: style.getPainter(
+        text,
+        borderRadius,
+        strokeWidth,
+        padding,
+        color: color,
+        tip: tip,
+      ),
     );
   }
 
