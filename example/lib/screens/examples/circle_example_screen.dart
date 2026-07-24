@@ -22,6 +22,7 @@ class CircleExampleScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 32),
                 ),
                 color: Colors.green,
+                strokeWidth: 2,
               ),
               const SizedBox(height: 32),
               TextDecorator.circled(

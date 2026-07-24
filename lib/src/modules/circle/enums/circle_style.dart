@@ -17,10 +17,11 @@ enum CircleStyle {
   /// - `text`: The [Text] widget to be decorated. The painter will use
   ///   `text.data` (or an empty string if null) and `text.style`
   ///   (or a default `TextStyle` if null).
-  /// - `decoration`: A [CircleDecoration] object that defines the appearance
-  ///   (e.g., color, strokeWidth) of the circle. Defaults to a standard
-  ///   orange circle with a stroke width of 1 if not provided.
-  CustomPainter getPainter(Text text, {CircleDecoration decoration = const CircleDecoration(color: Colors.orange, strokeWidth: 1)}) {
+  /// - `color`: The [Color] of the circle outline.
+  /// - `strokeWidth`: The thickness of the circle outline.
+  CustomPainter getPainter(Text text, Color color, double strokeWidth) {
+    final decoration = CircleDecoration(color: color, strokeWidth: strokeWidth);
+
     switch (this) {
       case CircleStyle.basic:
         return ClosedCirclePainter(text: text.data ?? '', textStyle: text.style ?? const TextStyle(), decoration: decoration);

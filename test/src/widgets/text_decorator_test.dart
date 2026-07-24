@@ -140,6 +140,43 @@ void main() {
           );
         },
       );
+
+      testWidgets(
+        'CircleStyle.basic renders with custom strokeWidth',
+        (tester) async {
+          final widget = TextDecorator.circled(
+            style: CircleStyle.basic,
+            text: _text,
+            strokeWidth: _stokeWidth,
+          );
+
+          await tester.pumpWidget(createTestApp(_createCenter(widget)));
+          await tester.pumpAndSettle();
+
+          await expectLater(
+            find.byType(Text),
+            matchesGoldenFile('text_decorator/circle/basic.custom_stroke_width.png'),
+          );
+        },
+      );
+
+      testWidgets(
+        'CircleStyle.circled renders with custom strokeWidth',
+        (tester) async {
+          final widget = TextDecorator.circled(
+            text: _text,
+            strokeWidth: _stokeWidth,
+          );
+
+          await tester.pumpWidget(createTestApp(_createCenter(widget)));
+          await tester.pumpAndSettle();
+
+          await expectLater(
+            find.byType(Text),
+            matchesGoldenFile('text_decorator/circle/circled.custom_stroke_width.png'),
+          );
+        },
+      );
     });
   });
   group('Testing TextDecorator.underline styles', () {
