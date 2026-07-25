@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_text_decorator/src/modules/circle/classes/circle_size.dart';
 
 /// A mixin that provides a utility method to calculate dimensions
@@ -19,12 +20,13 @@ mixin CircleConstraints {
   CircleSize getCircleSizes({
     required String text,
     required TextStyle textStyle,
+    required Size size,
   }) {
     final textSpan = TextSpan(text: text, style: textStyle);
     final textPainter = TextPainter(
       text: textSpan,
       textDirection: TextDirection.ltr,
-    )..layout();
+    )..layout(maxWidth: size.width);
 
     const textHeightOffset = 2;
     const textWidthScale = 1.8;

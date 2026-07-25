@@ -43,11 +43,10 @@ class ClosedCirclePainter extends TextDecoratorPainter with CircleConstraints {
       ..strokeWidth = decoration.strokeWidth
       ..style = PaintingStyle.stroke;
 
-    final circleSize = getCircleSizes(text: text, textStyle: textStyle);
+    final circleSize = getCircleSizes(text: text, textStyle: textStyle, size: size);
 
-    final scaledHorizontalRadius = circleSize.horizontalRadius * 2.1;
-    final scaledVerticalRadiusBottomCircle = circleSize.verticalRadius * 2.9;
-    const verticalOffset = 1.8;
+    final scaledVerticalRadiusBottomCircle = circleSize.verticalRadius * 3.5;
+    const verticalOffset = 2.5;
 
     final centerOffset = Offset(
       size.width / 2,
@@ -57,7 +56,7 @@ class ClosedCirclePainter extends TextDecoratorPainter with CircleConstraints {
     canvas.drawOval(
       Rect.fromCenter(
         center: centerOffset,
-        width: scaledHorizontalRadius,
+        width: size.width * 1.1,
         height: scaledVerticalRadiusBottomCircle,
       ),
       paint,
